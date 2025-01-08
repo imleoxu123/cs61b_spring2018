@@ -29,7 +29,7 @@ public class BeautyWorld {
         // initialize the tile rendering engine with a window of size WIDTH x HEIGHT
         TERenderer ter = new TERenderer();
         ter.initialize(WIDTH, HEIGHT);
-        seed = 45678;
+        seed = 999999999;
 
         // initialize tiles
         TETile[][] world = new TETile[WIDTH][HEIGHT];
@@ -51,17 +51,18 @@ public class BeautyWorld {
             }
         }
 
-        // initialize hallways
-        ArrayList<Hallway> hhallways = HallwayGenerator.horizontalHallwayGenerator(rooms, RANDOM);
-        for (Hallway hhallway: hhallways) {
-            int x = hhallway.getPosition().getX();
-            int y = hhallway.getPosition().getY();
-            for (int i = 0; i < hhallway.getLength(); i += 1) {
+
+        ArrayList<Hallway> whallways = HorizontalHallwayGenerator.HallwayGenerator(rooms, RANDOM);
+        for (Hallway whallway: whallways) {
+            int x = whallway.getPosition().getX();
+            int y = whallway.getPosition().getY();
+            for (int i = 0; i < whallway.getLength(); i += 1) {
                 world[x+i][y] = Tileset.FLOOR;
             }
         }
 
-        ArrayList<Hallway> vhallways = HallwayGenerator.verticalHallwayGenerator(rooms, RANDOM);
+
+        ArrayList<Hallway> vhallways = VerticalHallwayGenerator.HallwayGenerator(rooms, RANDOM);
         for (Hallway vhallway: vhallways) {
             int x = vhallway.getPosition().getX();
             int y = vhallway.getPosition().getY();
@@ -69,6 +70,10 @@ public class BeautyWorld {
                 world[x][y+i] = Tileset.FLOOR;
             }
         }
+
+
+        // worldmanaer
+
 
         // draws the world to the screen
         ter.renderFrame(world);

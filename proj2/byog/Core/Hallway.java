@@ -1,5 +1,7 @@
 package byog.Core;
 
+import java.util.ArrayList;
+
 public class Hallway {
 
     private Position position;
