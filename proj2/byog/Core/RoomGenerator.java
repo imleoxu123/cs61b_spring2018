@@ -15,7 +15,7 @@ public class RoomGenerator {
      */
     public static ArrayList<Room> roomGenerator(TETile[][] world, Random r, int WIDTH, int HEIGHT) {
         ArrayList<Room> roomList = new ArrayList<>();
-        int num = RandomUtils.uniform(r, 100, 200);
+        int num = RandomUtils.uniform(r, 50, 100);
 
         for(int i=0; i<num; i++) {
             Room room = roomHelper(r);

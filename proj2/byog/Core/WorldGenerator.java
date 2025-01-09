@@ -14,7 +14,7 @@ public class WorldGenerator {
     private static int WIDTH = 70;
     private static int HEIGHT = 30;
 
-    private static long seed = 88889999;
+    private static long seed = 1;
     private static Random RANDOM = new Random(seed);
 
     public static int getWEIGTH() {

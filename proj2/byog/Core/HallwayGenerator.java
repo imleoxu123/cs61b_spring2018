@@ -6,7 +6,7 @@ import java.util.Random;
 public class HallwayGenerator {
 
     public static int hallwayCount(Random r) {
-        return RandomUtils.uniform(r, 30, 40);
+        return RandomUtils.uniform(r, 10, 15);
     }
 
     public static boolean isWithinRoomBounds(ArrayList<Room> roomList, Position position) {
