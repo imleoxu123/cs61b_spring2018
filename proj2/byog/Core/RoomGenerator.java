@@ -1,41 +1,66 @@
 package byog.Core;
 
+import byog.TileEngine.TETile;
+import byog.TileEngine.Tileset;
+
 import java.util.ArrayList;
 import java.util.Random;
 
 public class RoomGenerator {
+
     /**
      * 生成一个包含随机房间的列表，并确保房间不重叠。
      *
-     * @param r 随机数生成器
-     * @return 一个包含房间对象的列表
+     *
      */
-    public static ArrayList<Room> roomGenerator(Random r) {
+    public static ArrayList<Room> roomGenerator(TETile[][] world, Random r, int WIDTH, int HEIGHT) {
         ArrayList<Room> roomList = new ArrayList<>();
         int num = RandomUtils.uniform(r, 100, 200);
 
         for(int i=0; i<num; i++) {
-            Room room = Room.roomHelper(r);
-            if (isRoomValid(roomList, room)) {
+            Room room = roomHelper(r);
+            if (isRoomValid(roomList, room, WIDTH, HEIGHT)) {
                 roomList.add(room);
+            }
+        }
+
+        for (Room room: roomList) {
+            int x = room.getPosition().getX();
+            int y = room.getPosition().getY();
+            for (int i = 0; i < room.getWeight(); i += 1) {
+                for (int j = 0; j < room.getHeight(); j += 1) {
+                    world[x+i][y+j] = Tileset.FLOOR;
+                }
             }
         }
 
         return roomList;
     }
 
+
+    public static Room roomHelper(Random r) {
+        Room room = new Room();
+        Position p = new Position(RandomUtils.uniform(r, 1, WorldGenerator.getWEIGTH() - 1), RandomUtils.uniform(r, 1, WorldGenerator.getHEIGHT() - 1));
+
+        room.setPosition(p);
+        room.setWeight(RandomUtils.uniform(r, 3, 6));
+        room.setHeight(RandomUtils.uniform(r, 3, 6));
+
+        return room;
+    }
+
     /**
-     * 确保房间列表中的所有房间对象不重叠。
+     * 确保房间有效。
      *
      * @param roomList 房间对象的列表
      */
-    private static boolean isRoomValid(ArrayList<Room> roomList, Room room) {
-        return isInworld(room) && isRoomNonOverlapping(roomList, room);
+    private static boolean isRoomValid(ArrayList<Room> roomList, Room room, int WIDTH, int HEIGHT) {
+        return isInworld(room, WIDTH, HEIGHT) && isRoomNonOverlapping(roomList, room);
     }
 
-    /** 检查房间对象是否位于BeautyWorld中 */
-    private static boolean isInworld(Room room) {
-        return room.getPosition().getX() + room.getWeight() <= BeautyWorld.getWEIGTH() && room.getPosition().getY() + room.getHeight() <= BeautyWorld.getHEIGHT();
+    /** 检查房间对象是否位于BeautyWorld中并且不与边界接壤 */
+    private static boolean isInworld(Room room, int WIDTH, int HEIGHT) {
+        return room.getPosition().getX() + room.getWeight() < WIDTH && room.getPosition().getY() + room.getHeight() < HEIGHT;
     }
 
     /**

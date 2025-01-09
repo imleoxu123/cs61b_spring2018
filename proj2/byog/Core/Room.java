@@ -32,15 +32,4 @@ public class Room {
         this.weight = weight;
     }
 
-    public static Room roomHelper(Random r) {
-        Room room = new Room();
-        Position p = new Position(RandomUtils.uniform(r, 0, BeautyWorld.getWEIGTH()), RandomUtils.uniform(r, 0, BeautyWorld.getHEIGHT()));
-
-        room.setPosition(p);
-        room.setWeight(RandomUtils.uniform(r, 3, 6));
-        room.setHeight(RandomUtils.uniform(r, 3, 6));
-
-        return room;
-    }
-
 }
